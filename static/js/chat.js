@@ -26,8 +26,22 @@ socket.on("response",  (data) => {
   $(data+'<br/>').appendTo('#messages');
 });
 
-
+/**
+ * sendMessage - The workhorse function for sending messages
+ * 
+ * This function retrieves the message from the input field,
+ * sends it to the server via socket.io, and clears the input.
+ * It's triggered when the user wants to send a message.
+ */
 function sendMessage() {
-  console.log($('#messageInput').val());
-  socket.emit("message", $('#messageInput').val());
+    const messageInput = $('#messageInput');
+    const message = messageInput.val().trim();
+    
+    if (message) {
+        // Emit the message to the server
+        socket.emit("message", message);
+        
+        // Clear the input field after sending
+        messageInput.val('');
+    }
 }
